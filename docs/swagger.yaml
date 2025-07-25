@@ -33,7 +33,7 @@ definitions:
       role:
         type: string
     type: object
-host: localhost:8080
+host: https://sb-sanbercode-68-final-project-library-system-production.up.railway.app
 info:
   contact: {}
   description: A REST API for borrowing and returning books

@@ -1,7 +1,7 @@
 // @title Library Borrowing System API
 // @version 1.0
 // @description A REST API for borrowing and returning books
-// @host localhost:8080
+// @host https://sb-sanbercode-68-final-project-library-system-production.up.railway.app
 // @BasePath /api
 // @securityDefinitions.apikey BearerAuth
 // @in header
