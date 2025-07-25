@@ -9,6 +9,14 @@ import (
 	"github.com/google/uuid"
 )
 
+// GetCategories godoc
+// @Summary Get all categories
+// @Description Returns a list of all book categories
+// @Tags categories
+// @Produce json
+// @Success 200 {array} structs.Category
+// @Failure 500 {object} map[string]string
+// @Router /categories [get]
 func GetCategories(c *gin.Context) {
 	rows, err := config.DB.Query(`SELECT id, name FROM categories`)
 	if err != nil {
@@ -30,6 +38,17 @@ func GetCategories(c *gin.Context) {
 	c.JSON(http.StatusOK, categories)
 }
 
+// CreateCategory godoc
+// @Summary Create a new category
+// @Description Adds a new category to the system
+// @Tags categories
+// @Accept json
+// @Produce json
+// @Param category body structs.Category true "Category to create"
+// @Success 201 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /categories [post]
 func CreateCategory(c *gin.Context) {
 	var category structs.Category
 	if err := c.ShouldBindJSON(&category); err != nil {

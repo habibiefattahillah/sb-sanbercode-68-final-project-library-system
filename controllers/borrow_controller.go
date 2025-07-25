@@ -10,6 +10,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// BorrowBook godoc
+// @Summary Borrow a book
+// @Description Allows a user to borrow a book if stock is available
+// @Tags borrowings
+// @Produce json
+// @Param book_id path string true "Book ID to borrow"
+// @Success 201 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Security BearerAuth
+// @Router /books/{book_id}/borrow [post]
 func BorrowBook(c *gin.Context) {
 	userID := c.GetString("user_id")
 	bookID := c.Param("book_id")
@@ -59,7 +71,17 @@ func BorrowBook(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "book borrowed successfully"})
 }
 
-
+// ReturnBook godoc
+// @Summary Return a borrowed book
+// @Description Allows a user to return a previously borrowed book
+// @Tags borrowings
+// @Produce json
+// @Param book_id path string true "Book ID to return"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Security BearerAuth
+// @Router /books/{book_id}/return [post]
 func ReturnBook(c *gin.Context) {
 	userID := c.GetString("user_id")
 	bookID := c.Param("book_id")

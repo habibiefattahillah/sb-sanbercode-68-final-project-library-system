@@ -11,6 +11,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// Register godoc
+// @Summary Register a new user
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param   user body structs.User true "User Data"
+// @Success 201 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Router /users/register [post]
 func Register(c *gin.Context) {
 	var user structs.User
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -34,6 +43,18 @@ func Register(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "user registered successfully"})
 }
 
+// Login godoc
+// @Summary Log in a user
+// @Description Authenticates a user and returns a JWT token
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param credentials body structs.User true "User login credentials"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /users/login [post]
 func Login(c *gin.Context) {
 	var creds structs.User
 	if err := c.ShouldBindJSON(&creds); err != nil {

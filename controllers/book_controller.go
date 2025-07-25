@@ -10,6 +10,14 @@ import (
 	"github.com/google/uuid"
 )
 
+// GetBooks godoc
+// @Summary Get all books
+// @Description Returns a list of all books
+// @Tags books
+// @Produce json
+// @Success 200 {array} structs.Book
+// @Failure 500 {object} map[string]string
+// @Router /books [get]
 func GetBooks(c *gin.Context) {
 	rows, err := config.DB.Query(`SELECT id, title, author, stock, category_id FROM books`)
 	if err != nil {
@@ -32,6 +40,17 @@ func GetBooks(c *gin.Context) {
 	c.JSON(http.StatusOK, books)
 }
 
+// CreateBook godoc
+// @Summary Create a new book
+// @Description Adds a new book to the system
+// @Tags books
+// @Accept json
+// @Produce json
+// @Param book body structs.Book true "Book to create"
+// @Success 201 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /books [post]
 func CreateBook(c *gin.Context) {
 	var book structs.Book
 	if err := c.ShouldBindJSON(&book); err != nil {
@@ -53,6 +72,19 @@ func CreateBook(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "book created", "id": book.ID})
 }
 
+// UpdateBook godoc
+// @Summary Update an existing book
+// @Description Updates the information of a specific book
+// @Tags books
+// @Accept json
+// @Produce json
+// @Param id path string true "Book ID"
+// @Param book body structs.Book true "Updated book data"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /books/{id} [put]
 func UpdateBook(c *gin.Context) {
 	id := c.Param("id")
 	var book structs.Book
@@ -76,6 +108,16 @@ func UpdateBook(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "book updated"})
 }
 
+// DeleteBook godoc
+// @Summary Delete a book
+// @Description Deletes a book by ID
+// @Tags books
+// @Produce json
+// @Param id path string true "Book ID"
+// @Success 200 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /books/{id} [delete]
 func DeleteBook(c *gin.Context) {
 	id := c.Param("id")
 

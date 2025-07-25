@@ -1,3 +1,12 @@
+// @title Library Borrowing System API
+// @version 1.0
+// @description A REST API for borrowing and returning books
+// @host localhost:8080
+// @BasePath /api
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+
 package main
 
 import (
@@ -5,7 +14,11 @@ import (
 	"final-project/controllers"
 	"final-project/middleware"
 
+	"final-project/docs"
+
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -14,6 +27,9 @@ func main() {
 	defer db.Close()
 
 	r := gin.Default()
+
+	docs.SwaggerInfo.BasePath = "/api"
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	api := r.Group("/api")
 	{
